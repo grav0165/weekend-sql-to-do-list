@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="vendors/jquery.js"></script>
     <script src="scripts/client.js"></script>
     <link rel="stylesheet" href="styles/style.css"/>
@@ -12,7 +13,7 @@
     <section id="addToDo">
         <h2>What do we have to do?</h2>
         <form>
-            <input type="text" id="to-do-intput" placeholder="What do we need to do?">
+            <input type="text" id="to-do-input" placeholder="What do we need to do?">
             <button type="button" id="addButton">Add New Task</button>
         </form>
     </section>
@@ -23,7 +24,9 @@
                 <thead>
                     <tr>
                         <th>Task</th>
-                        <th>Complete?</th>
+                        <th>Status</th>
+                        <th>Complete</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody id="view-tasks">
