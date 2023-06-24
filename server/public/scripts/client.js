@@ -60,7 +60,15 @@ function deleteTask() {
     // Obtaining id of the task to delete
     const taskId = $(this).parent().parent().data('id');
     console.log('The ID of the selected task is: ', taskId);
-
+        sweetAlert({
+        title: 'Are you sure?',
+        text: "Click delete to remove this task from your list",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+        }).then((willDelete) => {
+        // Send a delete request to server
+        if(willDelete) {
     
             $.ajax({
                 method: 'DELETE',
@@ -77,7 +85,8 @@ function deleteTask() {
                 alert('Error in deleting a task');
             })
         }
-
+    }
+)}
 
 //Function to update the task to completed
 function completeTask() {
