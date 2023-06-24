@@ -61,6 +61,20 @@ toDoRouter.delete('/:id', (req, res) => {
     })
 })
 
+// PUT 
+toDoRouter.put('/:id', (req, res) => {
+    const queryParams = [req.params.id, req.body.newCompleted];
+    let query = `UPDATE "weekend-to-do-app" SET "completed"=$2 WHERE "id"=$1`
+    pool.query(query, queryParams);
+    .then(result => {
+        res.sendStatus(200);
+    })
+    .catch(error => {
+        console.log('Error in updating task ', error);
+        res.sendStatus(500)
+    })
+})
+
 
 
 module.exports = toDoRouter;

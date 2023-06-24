@@ -8,6 +8,7 @@ function onReady() {
     getTasks();
     $('#addButton').on('click', addTask);
     $('#view-tasks').on('click', '.delete-btn', deleteTask);
+    $('#view-tasks').on('click', '.complete-btn', completeTask)
 }
 
 function getTasks() {
@@ -86,6 +87,29 @@ function deleteTask() {
     })
 }
 
+//Function to update the task to completed
+function completeTask() {
+    const taskId =$(this).data('id');
+    const completedStatus = $(this).data('comp');
+    console.log('in complete task toggle: ', id, completedStatus);
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${taskId}`,
+        data: {newCompleted: !completedStatus}
+    })
+    .then((response) => {
+        // Console log to confirm inside of updating task
+        console.log('Updating a task');
+        // requesting all current tasks again
+        getTasks();
+    })
+    .catch((error) => {
+        // sending error to console log to diagnose issues
+        console.log('Error in UPDATE request: ', error);
+        alert('Error in updating a task');
+    })
+}
+
 
 // Render function to draw all database entries on page
 function render(listOfTasks) {
@@ -96,7 +120,7 @@ function render(listOfTasks) {
             <tr data-id="${task.id}">
                 <td>${task.task}</td>
                 <td>${task.completed}</td>
-                <td><button type="button" class="complete-btn">Complete Task</button></td>
+                <td><button type="button" class="complete-btn" data-comp="${task.completeTask}" data-id="${task.data}">Complete Task</button></td>
                 <td><button type="button" class="delete-btn">Delete Task</button></td>
             </tr>
         `);
