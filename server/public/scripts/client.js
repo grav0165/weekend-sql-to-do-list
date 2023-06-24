@@ -1,3 +1,4 @@
+
 console.log('Starting jQuery')
 
 $(document).ready(onReady);
@@ -6,6 +7,7 @@ function onReady() {
     // Establish get request for all database information
     getTasks();
     $('#addButton').on('click', addTask);
+    $('#view-tasks').on('click', '.delete-btn', deleteTask);
 }
 
 function getTasks() {
@@ -22,6 +24,7 @@ function getTasks() {
         // Sending to Render function
         render(listOfTasks);
     }).catch((error) => {
+        // Logging out errors in getting tasks
         console.log('Error in getting task list: ', error);
         alert('Error in getting task list!');
     })
@@ -35,19 +38,56 @@ function addTask() {
         task: $('#to-do-input').val()
     }
     console.log('Saving new task', newTask);
+    // Sending request to database to add task
     $.ajax({
         method: 'POST',
         url: '/tasks',
         data: newTask
     }).then(function (response) {
         console.log(response);
+        // Reloading page with all current tasks
         getTasks();
     }).catch(function(error) {
+        // Logging out errors posting task
         console.log('Error in addTask', error);
         alert('Error in adding task. Please try again later.')
     })
 }
 
+function deleteTask() {
+    // Obtaining id of the task to delete
+    const taskId = $(this).parent().parent().data('id');
+    console.log('The ID of the selected task is: ', taskId);
+
+    sweetAlert({
+        title: 'Are you sure?',
+        text: "Click delete to remove this task from your list",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then((willDelete) => {
+        // Send a delete request to server
+        if(willDelete) {
+            $.ajax({
+                method: 'DELETE',
+                url: `/tasks/${taskId}`
+            })
+            .then((response) => {
+                console.log('Delete a task');
+                // Requesting all current tasks again
+                getTasks();
+            })
+            .catch((error) => {
+                // Sending error to console log to diagnose issues. 
+                console.log('Error in DELETE request: ', error);
+                alert('Error in deleting a task');
+            })
+        }
+    })
+}
+
+
+// Render function to draw all database entries on page
 function render(listOfTasks) {
     console.log('inside of render function')
     $('#view-tasks').empty();
@@ -56,8 +96,8 @@ function render(listOfTasks) {
             <tr data-id="${task.id}">
                 <td>${task.task}</td>
                 <td>${task.completed}</td>
-                <td><button type="button" id="complete-btn">Complete Task</button></td>
-                <td><button type="delete" id="delete-btn">Delete Task</button></td>
+                <td><button type="button" class="complete-btn">Complete Task</button></td>
+                <td><button type="button" class="delete-btn">Delete Task</button></td>
             </tr>
         `);
         //Confirming id associated with data is grabbed correctly

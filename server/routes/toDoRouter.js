@@ -7,7 +7,7 @@ const pool = require('../modules/pool.js');
 
 //GET router to pull database information
 toDoRouter.get('/', (req, res) => {
-    let queryText = `SELECT * FROM "weekend-to-do-app" ORDER BY "timestamp" ASC`;
+    let queryText = `SELECT * FROM "weekend-to-do-app" ORDER BY "timestamp" ASC;`;
     pool.query(queryText)
     .then((result) => {
         //Requesting row data
@@ -23,10 +23,9 @@ toDoRouter.get('/', (req, res) => {
 toDoRouter.post('/', (req, res) => {
     console.log('Inside of posting tasks 🧘‍♀️, info sending: ', req.body);
     let task = req.body.task;
-    let timestamp = `CURRENT_TIMESTAMP`
     // Packing information to avoid SQL injection
-    const queryText = `INSERT INTO "weekend-to-do-app" (task, timestamp) VALUES ($1, $2)`;
-    const queryParams = [task, timestamp];
+    const queryText = `INSERT INTO "weekend-to-do-app" ("task", "timestamp") VALUES ($1, CURRENT_TIMESTAMP)`;
+    const queryParams = [task];
 
     // Sending to Server
     pool.query(queryText, queryParams)
@@ -34,6 +33,30 @@ toDoRouter.post('/', (req, res) => {
         res.sendStatus(201);
     }).catch((error) => {
         console.log(`Error making query ${queryText}`, error);
+        res.sendStatus(500);
+    })
+})
+
+// DELETE router to remove task from database
+toDoRouter.delete('/:id', (req, res) => {
+    console.log('Inside of deleting a task ❌');
+    // This grabs the ID of the row selected to delete
+    let idToDelete = req.params.id;
+    // queryText sending request to database to delete record
+    let queryText = `DELETE FROM "weekend-to-do-app" WHERE id = $1;`;
+
+    //Sending delete request to server
+    pool.query(queryText, [idToDelete])
+    .then((results) => {
+        // console log to confirm being deleted
+        console.log('Task deleted!');
+        // Sending OK status that request was accepted
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        // Console log in case of error to diagnose 
+        console.log('Error making database query', error);
+        // Sending response to client of error status
         res.sendStatus(500);
     })
 })
