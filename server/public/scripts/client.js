@@ -1,4 +1,5 @@
 
+
 console.log('Starting jQuery')
 
 $(document).ready(onReady);
@@ -60,15 +61,7 @@ function deleteTask() {
     const taskId = $(this).parent().parent().data('id');
     console.log('The ID of the selected task is: ', taskId);
 
-    sweetAlert({
-        title: 'Are you sure?',
-        text: "Click delete to remove this task from your list",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    }).then((willDelete) => {
-        // Send a delete request to server
-        if(willDelete) {
+    
             $.ajax({
                 method: 'DELETE',
                 url: `/tasks/${taskId}`
@@ -84,14 +77,13 @@ function deleteTask() {
                 alert('Error in deleting a task');
             })
         }
-    })
-}
+
 
 //Function to update the task to completed
 function completeTask() {
-    const taskId =$(this).data('id');
+    const taskId = $(this).data('id');
     const completedStatus = $(this).data('comp');
-    console.log('in complete task toggle: ', id, completedStatus);
+    console.log('in complete task toggle: ', taskId, completedStatus);
     $.ajax({
         method: 'PUT',
         url: `/tasks/${taskId}`,
@@ -109,6 +101,24 @@ function completeTask() {
         alert('Error in updating a task');
     })
 }
+function getItems () {
+    $.ajax({
+        type: 'GET',
+        url: '/items'
+    })
+    .then(function(response) {
+        let el = $('#inventoryOut');
+        let.empty();
+        for(let i=0; i<response.length; i++) {
+            el.append(`
+            <li>${response[i].size} ${response[i].color} ${response[i].name}
+            <button class="sellButton" data-id="${response[i].id}">Sell</button>
+            <button class="togglePendingButton" data-id="${response[i].id}" data-pending="${response[i].pending}">Pending: ${response[i].pending}</button></li>`)
+        }
+    }).catch((error) => {
+        alert('Error in getting inventory: ', error)
+    })
+}
 
 
 // Render function to draw all database entries on page
@@ -116,11 +126,20 @@ function render(listOfTasks) {
     console.log('inside of render function')
     $('#view-tasks').empty();
     for (let task of listOfTasks) {
+        let taskStatus;
+        let hiddenButton;
+        if(task.completed) {
+            taskStatus = "Complete!"
+            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`
+        } else {
+            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`
+            taskStatus = "To do still"
+        }
         let newRow = $(`
             <tr data-id="${task.id}">
                 <td>${task.task}</td>
-                <td>${task.completed}</td>
-                <td><button type="button" class="complete-btn" data-comp="${task.completeTask}" data-id="${task.data}">Complete Task</button></td>
+                <td>${taskStatus}</td>
+                <td>${hiddenButton}</td>
                 <td><button type="button" class="delete-btn">Delete Task</button></td>
             </tr>
         `);
