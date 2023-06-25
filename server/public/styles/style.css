@@ -42,6 +42,10 @@ div.circle4 {
     border-radius: 50%
 }
 
+div.border.text-input {
+    background-color: #7f886d;
+}
+
 
 #view-tasks .completed-task {
     background-color: #60f795;
