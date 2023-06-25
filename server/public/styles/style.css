@@ -1,54 +1,72 @@
 body {
     background-color: #f5f7ff;
+
 }
 
-.completed-task {
+.completed-task .task-column-complete {
     text-decoration: line-through;
-    background-color: green;
 }
 
-/* table formatting */
-#view-tasks .basic-row tr:nth-child(odd){ 
-    background: #fcfcfc;
-  }
+.circle1,
+.circle2,
+.circle3,
+.circle4 {
+    display: inline-block;
+}
 
-#view-tasks .basic-row tr:nth-child(even){
-    background: #dcdcdc;
-  }
+div.circle1 {
+    width: 5em;
+    height: 5em;
+    background: #437038;
+    border-radius: 50%
+}
+
+div.circle2 {
+    width: 5em;
+    height: 5em;
+    background: #8c4826;
+    border-radius: 50%
+}
+
+div.circle3 {
+    width: 5em;
+    height: 5em;
+    background: #13585d;
+    border-radius: 50%
+}
+
+div.circle4 {
+    width: 5em;
+    height: 5em;
+    background: #6d9782;
+    border-radius: 50%
+}
+
 
 #view-tasks .completed-task {
     background-color: #60f795;
     color: black;
-    
 }
 
 .to-do-style {
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 1em;
     min-width: 500px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border: solid #162c1d thin;
-    border-radius: 10px;
 }
 
-
-.container-fluid {
-    
+.primary-border {
+    padding-left: 10em;
+    padding-right: 10em;
+    border-radius: 5px;
 }
 
 .to-do-style thead {
     background-color: #162c1d;
     color: #ffffff;
     text-align: left;
-}
-
-.to-do-style th {
-    padding: 12px 15px;
-}
-
-.to-do-style tbody tr {
-    border-bottom: 1px solid #dddddd
+    border-radius: 5px;
 }
 
 .to-do-style tbody tr:last-of-type {

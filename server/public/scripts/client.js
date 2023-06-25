@@ -55,6 +55,7 @@ function addTask() {
         console.log('Error in addTask', error);
         alert('Error in adding task. Please try again later.')
     })
+    $('#to-do-input').val('')
 }
 
 function deleteTask() {
@@ -132,8 +133,8 @@ function render(listOfTasks) {
         }
         let newRow = $(`
             <tr data-id="${task.id}" class="${rowClass} active-row">
-                <td>${task.task}</td>
-                <td>${taskStatus}</td>
+                <td class="task-column-complete">${task.task}</td>
+                <td class="status-column">${taskStatus}</td>
                 <td data-pend="${taskStatus}">${hiddenButton}</td>
                 <td><button type="button" class="delete-btn  btn btn-outline-danger">Delete Task</button></td>
             </tr>
