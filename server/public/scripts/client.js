@@ -94,11 +94,15 @@ function deleteTask() {
 function completeTask() {
     const taskId = $(this).data('id');
     const completedStatus = $(this).data('comp');
+    const completedTime = $(this).data('time');
     console.log('in complete task toggle: ', taskId, completedStatus);
     $.ajax({
         method: 'PUT',
         url: `/tasks/${taskId}`,
-        data: {newCompleted: !completedStatus}
+        data: {
+            newCompleted: !completedStatus,
+            completedTime: completedTime
+        }
     })
     .then((response) => {
         // Console log to confirm inside of updating task
@@ -122,12 +126,14 @@ function render(listOfTasks) {
         let taskStatus;
         let hiddenButton;
         if(task.completed) {
-            taskStatus = "✅ Complete!";
-            hiddenButton = `<button class="uncomplete-btn btn btn-warning" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`;
+            timeCompleted = new Date(task.completed_time);
+            let timeText = timeCompleted.toLocaleTimeString();
+            taskStatus = `✅ Complete! ${timeText}`;
+            hiddenButton = `<button class="uncomplete-btn btn btn-warning" data-comp="${task.completed}" data-time="CURRENT_TIMESTAMP" data-id="${task.id}">Uncomplete Task</button>`;
             rowClass = "completed-task"
             
         } else {
-            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`;
+            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-time="" data-id="${task.id}">Complete Task</button>`;
             taskStatus = "🔲 To do still";
             rowClass = "basic-row"
         }
