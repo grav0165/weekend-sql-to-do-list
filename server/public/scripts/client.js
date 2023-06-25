@@ -9,7 +9,8 @@ function onReady() {
     getTasks();
     $('#addButton').on('click', addTask);
     $('#view-tasks').on('click', '.delete-btn', deleteTask);
-    $('#view-tasks').on('click', '.complete-btn', completeTask)
+    $('#view-tasks').on('click', '.complete-btn', completeTask);
+    $('#view-tasks').on('click', '.uncomplete-btn', completeTask)
 }
 
 function getTasks() {
@@ -101,24 +102,6 @@ function completeTask() {
         alert('Error in updating a task');
     })
 }
-function getItems () {
-    $.ajax({
-        type: 'GET',
-        url: '/items'
-    })
-    .then(function(response) {
-        let el = $('#inventoryOut');
-        let.empty();
-        for(let i=0; i<response.length; i++) {
-            el.append(`
-            <li>${response[i].size} ${response[i].color} ${response[i].name}
-            <button class="sellButton" data-id="${response[i].id}">Sell</button>
-            <button class="togglePendingButton" data-id="${response[i].id}" data-pending="${response[i].pending}">Pending: ${response[i].pending}</button></li>`)
-        }
-    }).catch((error) => {
-        alert('Error in getting inventory: ', error)
-    })
-}
 
 
 // Render function to draw all database entries on page
@@ -129,22 +112,38 @@ function render(listOfTasks) {
         let taskStatus;
         let hiddenButton;
         if(task.completed) {
-            taskStatus = "Complete!"
-            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`
+            taskStatus = "Complete!";
+            hiddenButton = `<button class="uncomplete-btn" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`;
+            rowClass = "completed-task"
+            
         } else {
-            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`
-            taskStatus = "To do still"
+            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`;
+            taskStatus = "To do still";
+            rowClass = "basic-row"
         }
         let newRow = $(`
-            <tr data-id="${task.id}">
+            <tr data-id="${task.id}" class="${rowClass} active-row">
                 <td>${task.task}</td>
                 <td>${taskStatus}</td>
-                <td>${hiddenButton}</td>
+                <td data-pend="${taskStatus}">${hiddenButton}</td>
                 <td><button type="button" class="delete-btn">Delete Task</button></td>
             </tr>
         `);
+        completeStatus(taskStatus)
         //Confirming id associated with data is grabbed correctly
         console.log(newRow.data('id'));
+        
         $('#view-tasks').append(newRow)
+        
+    }
+}
+    
+
+
+function completeStatus(taskStatus) {
+    if(taskStatus == "Complete!") {
+        $('#view-tasks').children().addClass('Completed-Task')
+    } else {
+        $('#view-tasks').children().removeClass('Completed-Task')
     }
 }

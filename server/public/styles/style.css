@@ -1,0 +1,63 @@
+body {
+    background-color: #f5f7ff;
+}
+
+.uncomplete-btn {
+    background-color: yellow;
+}
+
+.completed-task {
+    text-decoration: line-through;
+    background-color: green;
+}
+
+.delete-btn {
+    background-color: red;
+    color:dimgray
+}
+
+
+/* table formatting */
+#view-tasks .basic-row tr:nth-child(odd){ 
+    background: #fcfcfc;
+  }
+
+#view-tasks .basic-row tr:nth-child(even){
+    background: #dcdcdc;
+  }
+
+#view-tasks .completed-task, .complete-btn {
+    background-color: #60f795;
+    color: black;
+    
+}
+
+.to-do-style {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    border: solid #162c1d thin;
+    border-radius: 10px;
+}
+
+
+
+.to-do-style thead tr {
+    background-color: #162c1d;
+    color: #ffffff;
+    text-align: left;
+}
+
+.to-do-style th, .styled-table td {
+    padding: 12px 15px;
+}
+
+.to-do-style tbody tr {
+    border-bottom: 1px solid #dddddd
+}
+
+.to-do-style tbody tr:last-of-type {
+    border-bottom: 2px solid #162c1d;
+}
