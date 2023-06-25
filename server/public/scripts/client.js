@@ -122,13 +122,13 @@ function render(listOfTasks) {
         let taskStatus;
         let hiddenButton;
         if(task.completed) {
-            taskStatus = "Complete!";
+            taskStatus = "✅ Complete!";
             hiddenButton = `<button class="uncomplete-btn btn btn-warning" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`;
             rowClass = "completed-task"
             
         } else {
             hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`;
-            taskStatus = "To do still";
+            taskStatus = "🔲 To do still";
             rowClass = "basic-row"
         }
         let newRow = $(`
@@ -151,7 +151,7 @@ function render(listOfTasks) {
 
 
 function completeStatus(taskStatus) {
-    if(taskStatus == "Complete!") {
+    if(taskStatus == "✅ Complete!") {
         $('#view-tasks').children().addClass('Completed-Task')
     } else {
         $('#view-tasks').children().removeClass('Completed-Task')
