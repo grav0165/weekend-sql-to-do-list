@@ -2,20 +2,10 @@ body {
     background-color: #f5f7ff;
 }
 
-.uncomplete-btn {
-    background-color: yellow;
-}
-
 .completed-task {
     text-decoration: line-through;
     background-color: green;
 }
-
-.delete-btn {
-    background-color: red;
-    color:dimgray
-}
-
 
 /* table formatting */
 #view-tasks .basic-row tr:nth-child(odd){ 
@@ -26,7 +16,7 @@ body {
     background: #dcdcdc;
   }
 
-#view-tasks .completed-task, .complete-btn {
+#view-tasks .completed-task {
     background-color: #60f795;
     color: black;
     
@@ -36,21 +26,24 @@ body {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 1em;
-    min-width: 400px;
+    min-width: 500px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
     border: solid #162c1d thin;
     border-radius: 10px;
 }
 
 
+.container-fluid {
+    
+}
 
-.to-do-style thead tr {
+.to-do-style thead {
     background-color: #162c1d;
     color: #ffffff;
     text-align: left;
 }
 
-.to-do-style th, .styled-table td {
+.to-do-style th {
     padding: 12px 15px;
 }
 

@@ -113,11 +113,11 @@ function render(listOfTasks) {
         let hiddenButton;
         if(task.completed) {
             taskStatus = "Complete!";
-            hiddenButton = `<button class="uncomplete-btn" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`;
+            hiddenButton = `<button class="uncomplete-btn btn btn-warning" data-comp="${task.completed}" data-id="${task.id}">Uncomplete Task</button>`;
             rowClass = "completed-task"
             
         } else {
-            hiddenButton = `<button class="complete-btn" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`;
+            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-id="${task.id}">Complete Task</button>`;
             taskStatus = "To do still";
             rowClass = "basic-row"
         }
@@ -126,7 +126,7 @@ function render(listOfTasks) {
                 <td>${task.task}</td>
                 <td>${taskStatus}</td>
                 <td data-pend="${taskStatus}">${hiddenButton}</td>
-                <td><button type="button" class="delete-btn">Delete Task</button></td>
+                <td><button type="button" class="delete-btn  btn btn-outline-danger">Delete Task</button></td>
             </tr>
         `);
         completeStatus(taskStatus)
