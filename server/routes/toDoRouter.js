@@ -64,9 +64,12 @@ toDoRouter.delete('/:id', (req, res) => {
 // PUT 
 toDoRouter.put('/:id', (req, res) => {
     console.log('Inside of completing a task ✅')
-    const queryParams = [req.params.id, req.body.newCompleted];
+    const queryParams = [req.params.id, req.body.newCompleted, req.body.completedTime];
     console.log('Querey params sent over: ', queryParams)
-    let query = `UPDATE "weekend-to-do-app" SET "completed"=$2 WHERE "id"=$1`
+    let query = `
+    UPDATE "weekend-to-do-app" 
+    SET "completed"=$2 ,"completed_time"=$3 
+    WHERE "id"=$1;`
     pool.query(query, queryParams)
     .then(result => {
         res.sendStatus(200);
