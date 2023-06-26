@@ -133,7 +133,7 @@ function render(listOfTasks) {
             rowClass = "completed-task"
             
         } else {
-            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-time="" data-id="${task.id}">Complete Task</button>`;
+            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-time='' data-id="${task.id}">Complete Task</button>`;
             taskStatus = "🔲 To do still";
             rowClass = "basic-row"
         }
