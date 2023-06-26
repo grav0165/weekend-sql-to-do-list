@@ -65,6 +65,11 @@ toDoRouter.delete('/:id', (req, res) => {
 toDoRouter.put('/:id', (req, res) => {
     console.log('Inside of completing a task ✅')
     const queryParams = [req.params.id, req.body.newCompleted];
+    // originally this had a third item: req.body.completedTime, which was then used in the SQL
+    // The "completed_time"=$3 was given the string of 'CURRENT_TIMESTAMP' or 'NULL', however
+    // I kept getting a syntax error from the server. Instead of opted to hide the completed time
+    // in the DOM if the task was not completed and simply CURRENT_TIMESTAMP all put requests. 
+    // Technically this will be inaccurate information, but will display correctly to the DOM
     console.log('Querey params sent over: ', queryParams)
     let query = `
     UPDATE "weekend-to-do-app" 
