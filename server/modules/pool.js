@@ -10,9 +10,11 @@ if(process.env.DATABASE_URL) {
     }
 }) 
 } else {
-    database: 'weekend-to-do-app',
-    host: 'localhost',
-    port: 5432
+    pool = new pg.Pool({
+        host: 'localhost',
+        port: 5432,
+        database: 'weekend-to-do-app'
+      })
 };
 
 module.exports = pool;
