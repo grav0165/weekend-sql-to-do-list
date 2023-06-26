@@ -123,17 +123,20 @@ function render(listOfTasks) {
     console.log('inside of render function')
     $('#view-tasks').empty();
     for (let task of listOfTasks) {
+        // Setting empty variables to use for hiding other button, and giving status
         let taskStatus;
         let hiddenButton;
         if(task.completed) {
+            // Formatting the date received from the server
             timeCompleted = new Date(task.completed_time);
             let timeText = timeCompleted.toLocaleTimeString();
+            // Using completed along with date time
             taskStatus = `✅ Complete! ${timeText}`;
             hiddenButton = `<button class="uncomplete-btn btn btn-warning" data-comp="${task.completed}" data-time="CURRENT_TIMESTAMP" data-id="${task.id}">Uncomplete Task</button>`;
             rowClass = "completed-task"
             
         } else {
-            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-time='' data-id="${task.id}">Complete Task</button>`;
+            hiddenButton = `<button class="complete-btn btn btn-outline-success" data-comp="${task.completed}" data-time="" data-id="${task.id}">Complete Task</button>`;
             taskStatus = "🔲 To do still";
             rowClass = "basic-row"
         }

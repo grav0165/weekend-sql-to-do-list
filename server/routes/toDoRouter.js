@@ -68,7 +68,7 @@ toDoRouter.put('/:id', (req, res) => {
     console.log('Querey params sent over: ', queryParams)
     let query = `
     UPDATE "weekend-to-do-app" 
-    SET "completed"=$2 ,"completed_time"=$3 
+    SET "completed"=$2, "completed_time"=$3
     WHERE "id"=$1;`
     pool.query(query, queryParams)
     .then(result => {
